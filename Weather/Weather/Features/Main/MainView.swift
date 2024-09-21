@@ -7,15 +7,23 @@
 
 import SwiftUI
 
+enum Tab {
+    case main
+    case map
+    case list
+}
+
 struct MainView: View {
+    @State var selectedTab: Tab = .main
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack{
+            ScrollView{
+
+            }
+            Image("MainBG")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
         }
-        .padding()
     }
 }
 
