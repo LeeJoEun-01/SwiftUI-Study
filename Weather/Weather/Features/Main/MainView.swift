@@ -16,11 +16,12 @@ enum Tab {
 struct MainView: View {
     @State var selectedTab: Tab = .main
 
-    @State var location: String = "Seoul"
-    @State var temparature: Int = 21
-    @State var weather: String = "Partly Cloudy"
-    @State var high: Int = 23
-    @State var low: Int = 17
+    @State private var location: String = "Seoul"
+    @State private var temparature: Int = 21
+    @State private var weather: String = "Partly Cloudy"
+    @State private var high: Int = 23
+    @State private var low: Int = 17
+    // State는 해당뷰에서만 사용하니까 꼭!꼭!꼭! private
 
     var body: some View {
         ZStack{

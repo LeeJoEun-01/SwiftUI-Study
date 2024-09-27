@@ -60,7 +60,7 @@ struct CustomTabbarView: View {
                     Image("ellipseIcon")
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
-                        .foregroundColor(Color(red: 0.55, green: 0.58, blue: 0.65))
+                        .foregroundStyle(Color(red: 0.55, green: 0.58, blue: 0.65))
                         .frame(width: 9, height: 9)
                 }
                 Spacer()
