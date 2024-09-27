@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02465B6E2C9EE5370021D684 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02465B6D2C9EE5370021D684 /* TabbarView.swift */; };
+		02D525CB2CA0885E00AB994D /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D525CA2CA0885E00AB994D /* StudyView.swift */; };
 		02E9A3592C9EB3300004AE8C /* WeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9A3582C9EB3300004AE8C /* WeatherApp.swift */; };
 		02E9A35B2C9EB3300004AE8C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9A35A2C9EB3300004AE8C /* MainView.swift */; };
 		02E9A35D2C9EB3310004AE8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02E9A35C2C9EB3310004AE8C /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		02465B6D2C9EE5370021D684 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+		02D525CA2CA0885E00AB994D /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
 		02E9A3552C9EB3300004AE8C /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E9A3582C9EB3300004AE8C /* WeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApp.swift; sourceTree = "<group>"; };
 		02E9A35A2C9EB3300004AE8C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				02E9A3582C9EB3300004AE8C /* WeatherApp.swift */,
+				02D525CA2CA0885E00AB994D /* StudyView.swift */,
 				02465B652C9EDEA10021D684 /* Core */,
 				02465B662C9EDEB40021D684 /* Features */,
 				02465B672C9EDECC0021D684 /* Resources */,
@@ -206,6 +209,7 @@
 			files = (
 				02465B6E2C9EE5370021D684 /* TabbarView.swift in Sources */,
 				02E9A35B2C9EB3300004AE8C /* MainView.swift in Sources */,
+				02D525CB2CA0885E00AB994D /* StudyView.swift in Sources */,
 				02E9A3592C9EB3300004AE8C /* WeatherApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
