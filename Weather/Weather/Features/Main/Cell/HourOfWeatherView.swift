@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct HourOfWeatherView: View {
-    @State private var time: String = "12PM"
-    @State private var weatherIcon: String = "cloud"
-    @State private var temparature: String = "12"
+    let time: String
+    let weatherIcon: String
+    let temparature: Int
+
+    init(time: String, weatherIcon: String, temparature: Int) {
+        self.time = time
+        self.weatherIcon = weatherIcon
+        self.temparature = temparature
+    }
 
     var body: some View {
         VStack(spacing: 24) {
             Text("\(time)")
+                .font(.system(size: 17))
+                .fontWeight(.medium)
             Image(systemName: weatherIcon)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
             Text("\(temparature)°")
+                .font(.system(size: 22))
+                .fontWeight(.medium)
         }.foregroundStyle(.white)
     }
 }
 
 #Preview {
-    HourOfWeatherView().background(.black)
+    HourOfWeatherView(time: "11PM", weatherIcon: "cloud.sun.fill", temparature: 12).background(.black)
 }
