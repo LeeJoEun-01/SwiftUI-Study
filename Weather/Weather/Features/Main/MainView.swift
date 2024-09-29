@@ -52,10 +52,15 @@ struct MainView: View {
                     .foregroundStyle(.white)
                     .padding(.top, 34)
 
-                Text("\(temparature)°")
+                Text("\(temparature)")
                     .font(.system(size: 102))
                     .fontWeight(.thin)
                     .foregroundStyle(.white)
+                Text("°")
+                    .font(.system(size: 102))
+                    .fontWeight(.thin)
+                    .foregroundStyle(.white)
+                    .offset(x: 65, y: -125)
 
                 Text(weather)
                     .font(.system(size: 24))
