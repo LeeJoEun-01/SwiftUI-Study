@@ -24,11 +24,14 @@ struct MainView: View {
     // State는 해당뷰에서만 사용하니까 꼭!꼭!꼭! private
 
     var body: some View {
+        let rows = [GridItem(.flexible())]
+        let colors: [Color] = [.black, .blue, .brown, .cyan, .gray, .indigo, .mint, .yellow, .orange, .purple]
+
         ZStack{
             Image("MainBG")
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
-            ScrollView{
+            ScrollView(.vertical) {
                 Text(location)
                     .font(.system(size: 37))
                     .foregroundStyle(.white)
@@ -53,6 +56,15 @@ struct MainView: View {
                         .fontWeight(.medium)
                         .foregroundStyle(.white)
                 })
+
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: rows) {
+                        ForEach(colors, id: \.self) { color in
+                            HourOfWeatherView()
+                                .background(color)
+                        }
+                    }
+                }
             }
         }
     }
