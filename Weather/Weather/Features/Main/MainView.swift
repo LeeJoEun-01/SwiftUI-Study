@@ -20,6 +20,15 @@ struct hourOfWeather: Hashable {
     let temparature: Int
 }
 
+struct dayOfWeather: Hashable {
+    let id = UUID()
+    let day: String
+    let weatherIcon: String
+    let precipitation: Int?
+    let lowTemp: Int
+    let highTemp: Int
+}
+
 struct MainView: View {
     @State var selectedTab: Tab = .main
 
@@ -38,9 +47,20 @@ struct MainView: View {
                                                      hourOfWeather(time: "5PM", iconName: "cloud.moon.fill", temparature: 13),
                                                      hourOfWeather(time: "6PM", iconName: "cloud.sun.fill", temparature: 12),
                                                      hourOfWeather(time: "7PM", iconName: "cloud.hail.fill", temparature: 11)]
+    @State private var dummyData2: [dayOfWeather] = [dayOfWeather(day: "Today", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 13, highTemp: 21),
+                                                     dayOfWeather(day: "Tue", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 10, highTemp: 22),
+                                                     dayOfWeather(day: "Wed", weatherIcon: "sun.max.fill", precipitation: 60, lowTemp: 12, highTemp: 22),
+                                                     dayOfWeather(day: "Thu", weatherIcon: "sun.max.fill", precipitation: 40, lowTemp: 16, highTemp: 23),
+                                                     dayOfWeather(day: "Fri", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 19, highTemp: 24),
+                                                     dayOfWeather(day: "Sat", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 15, highTemp: 20),
+                                                     dayOfWeather(day: "Sun", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 10, highTemp: 20),
+                                                     dayOfWeather(day: "Mon", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 13, highTemp: 20),
+                                                     dayOfWeather(day: "Tue", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 18, highTemp: 24),
+                                                     dayOfWeather(day: "Sun", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 15, highTemp: 24)]
 
     var body: some View {
         let rows = [GridItem(.flexible())]
+        let cols = [GridItem(.flexible())]
 
         ZStack{
             Image("MainBG")
@@ -56,12 +76,13 @@ struct MainView: View {
                     .font(.system(size: 102))
                     .fontWeight(.thin)
                     .foregroundStyle(.white)
-                Text("°")
-                    .font(.system(size: 102))
-                    .fontWeight(.thin)
-                    .foregroundStyle(.white)
-                    .offset(x: 65, y: -125)
-
+                    .overlay(
+                        Text("°")
+                            .font(.system(size: 102))
+                            .fontWeight(.thin)
+                            .foregroundStyle(.white)
+                            .offset(x: 65, y: 0)
+                    )
                 Text(weather)
                     .font(.system(size: 24))
                     .foregroundStyle(.white)
@@ -82,17 +103,17 @@ struct MainView: View {
                         .strokeBorder(.white.opacity(0.1), lineWidth: 1)
                         .foregroundStyle(.clear)
                         .frame(height: 212)
-                        .padding(.top, 44)
+                        .padding(.top, 30)
                         .padding([.leading,.trailing], 20)
                     VStack {
                         Text("Cloudy conditions from 1AM-9AM, with showers expected at 9AM.")
                             .font(.system(size: 18))
                             .foregroundStyle(.white)
-                            .padding(.top, 40)
+                            .padding(.top, 30)
                         Divider()
                             .background(.white)
                         ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHGrid(rows: rows, spacing: 30) {
+                            LazyHGrid(rows: rows, spacing: 34) {
                                 ForEach(dummyData, id: \.id) { data in
                                     HourOfWeatherView(time: data.time, weatherIcon: data.iconName, temparature: data.temparature)
                                 }
@@ -102,6 +123,35 @@ struct MainView: View {
 
                     }.padding([.leading,.trailing], 34)
                 }
+
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15)
+                        .strokeBorder(.white.opacity(0.1), lineWidth: 1)
+                        .foregroundStyle(.clear)
+                        .frame(height: 590)
+                        .padding([.leading,.trailing], 20)
+                    VStack {
+                        HStack {
+                            Image(systemName: "calendar")
+                                .resizable()
+                                .frame(width: 19, height: 18)
+                                .foregroundStyle(.white)
+                            Text("10-DAY  FORECAST")
+                                .font(.system(size: 15))
+                                .fontWeight(.medium)
+                                .foregroundStyle(.white)
+                            Spacer()
+                        }.padding(.leading, 38)
+                            .padding(.top, 12)
+                        ScrollView(.vertical, showsIndicators: false) {
+                            LazyVGrid(columns: cols, spacing: 0) {
+                                ForEach(dummyData2, id: \.id) { data in
+                                    DayOfWeatherView(day: data.day, weatherIcon: data.weatherIcon, precipitation: data.precipitation, lowTemp: data.lowTemp, highTemp: data.highTemp)
+                                }
+                            }
+                        }
+                    }
+                }.padding(.top, 4)
             }
         }
     }
