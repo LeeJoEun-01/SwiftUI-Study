@@ -27,9 +27,15 @@ struct HourOfWeatherView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
-            Text("\(temparature)°")
+            Text("\(temparature)")
                 .font(.system(size: 22))
                 .fontWeight(.medium)
+                .overlay(
+                    Text("°")
+                    .font(.system(size: 22))
+                    .fontWeight(.medium)
+                    .offset(x:17.0, y:-1)
+                )
         }.foregroundStyle(.white)
     }
 }
