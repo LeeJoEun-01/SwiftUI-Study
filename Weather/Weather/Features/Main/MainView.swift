@@ -47,16 +47,16 @@ struct MainView: View {
                                                      hourOfWeather(time: "5PM", iconName: "cloud.moon.fill", temparature: 13),
                                                      hourOfWeather(time: "6PM", iconName: "cloud.sun.fill", temparature: 12),
                                                      hourOfWeather(time: "7PM", iconName: "cloud.hail.fill", temparature: 11)]
-    @State private var dummyData2: [dayOfWeather] = [dayOfWeather(day: "Today", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 13, highTemp: 21),
-                                                     dayOfWeather(day: "Tue", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 10, highTemp: 22),
-                                                     dayOfWeather(day: "Wed", weatherIcon: "sun.max.fill", precipitation: 60, lowTemp: 12, highTemp: 22),
-                                                     dayOfWeather(day: "Thu", weatherIcon: "sun.max.fill", precipitation: 40, lowTemp: 16, highTemp: 23),
-                                                     dayOfWeather(day: "Fri", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 19, highTemp: 24),
-                                                     dayOfWeather(day: "Sat", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 15, highTemp: 20),
-                                                     dayOfWeather(day: "Sun", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 10, highTemp: 20),
-                                                     dayOfWeather(day: "Mon", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 13, highTemp: 20),
-                                                     dayOfWeather(day: "Tue", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 18, highTemp: 24),
-                                                     dayOfWeather(day: "Sun", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 15, highTemp: 24)]
+    @State private var dummyData2: [dayOfWeather] = [dayOfWeather(day: "Today", weatherIcon: "sun", precipitation: 0, lowTemp: 13, highTemp: 21),
+                                                     dayOfWeather(day: "Tue", weatherIcon: "rain", precipitation: 10, lowTemp: 10, highTemp: 22),
+                                                     dayOfWeather(day: "Wed", weatherIcon: "rain", precipitation: 60, lowTemp: 12, highTemp: 22),
+                                                     dayOfWeather(day: "Thu", weatherIcon: "rain", precipitation: 40, lowTemp: 16, highTemp: 23),
+                                                     dayOfWeather(day: "Fri", weatherIcon: "bolt", precipitation: 0, lowTemp: 19, highTemp: 24),
+                                                     dayOfWeather(day: "Sat", weatherIcon: "bolt", precipitation: 0, lowTemp: 15, highTemp: 20),
+                                                     dayOfWeather(day: "Sun", weatherIcon: "cloud", precipitation: 0, lowTemp: 10, highTemp: 20),
+                                                     dayOfWeather(day: "Mon", weatherIcon: "cloud", precipitation: 0, lowTemp: 13, highTemp: 20),
+                                                     dayOfWeather(day: "Tue", weatherIcon: "sun", precipitation: 0, lowTemp: 18, highTemp: 24),
+                                                     dayOfWeather(day: "Sun", weatherIcon: "sun", precipitation: 0, lowTemp: 15, highTemp: 24)]
 
     var body: some View {
         let rows = [GridItem(.flexible())]
@@ -146,7 +146,7 @@ struct MainView: View {
                         ScrollView(.vertical, showsIndicators: false) {
                             LazyVGrid(columns: cols, spacing: 0) {
                                 ForEach(dummyData2, id: \.id) { data in
-                                    DayOfWeatherView(day: data.day, weatherIcon: data.weatherIcon, precipitation: data.precipitation, lowTemp: data.lowTemp, highTemp: data.highTemp)
+                                    DayOfWeatherView(day: data.day, weatherIcon: WeatherIcon(rawValue: data.weatherIcon) ?? .sun, precipitation: data.precipitation, lowTemp: data.lowTemp, highTemp: data.highTemp)
                                 }
                             }
                         }
