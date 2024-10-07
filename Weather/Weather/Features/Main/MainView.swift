@@ -130,6 +130,7 @@ struct MainView: View {
                         .foregroundStyle(.clear)
                         .frame(height: 590)
                         .padding([.leading,.trailing], 20)
+                        .padding(.bottom, 52)
                     VStack {
                         HStack {
                             Image(systemName: "calendar")
@@ -141,7 +142,7 @@ struct MainView: View {
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
                             Spacer()
-                        }.padding(.leading, 38)
+                        }.padding(.leading, 44)
                             .padding(.top, 12)
                         ScrollView(.vertical, showsIndicators: false) {
                             LazyVGrid(columns: cols, spacing: 0) {
