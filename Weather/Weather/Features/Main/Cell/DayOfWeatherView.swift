@@ -7,61 +7,69 @@
 
 import SwiftUI
 
-enum WeatherIcon {
-    case sun
-    case rain
-    case cloud
-    case bolt
+enum WeatherIcon: String {
+    case sun = "sun"
+    case rain = "rain"
+    case cloud = "cloud"
+    case bolt = "bolt"
 
-    var Icon: Image {
+    var icon: Image {
         switch self {
         case .sun:
-            return Image("sun.max.fill")
-                .resizable()
-                .foregroundStyle(.yellow) as! Image
+            return Image(systemName: "sun.max.fill")
+                .symbolRenderingMode(.multicolor)
         case .rain:
-            return Image("sun.max.fill")
-                .resizable()
-                .foregroundStyle(.yellow) as! Image
+            return Image(systemName: "cloud.drizzle.fill")
+                .symbolRenderingMode(.multicolor)
         case .cloud:
-            return Image("sun.max.fill")
-                .resizable()
-                .foregroundStyle(.yellow) as! Image
+            return Image(systemName: "cloud.fill")
+                .symbolRenderingMode(.multicolor)
         case .bolt:
-            return Image("sun.max.fill")
-                .resizable()
-                .foregroundStyle(.yellow) as! Image
+            return Image(systemName: "cloud.bolt.fill")
+                .symbolRenderingMode(.multicolor)
         }
     }
 }
 
 struct DayOfWeatherView: View {
     let day: String
-    let weatherIcon: String
+    let weatherIcon: WeatherIcon
     let precipitation: Int?
     let lowTemp: Int
     let highTemp: Int
 
-    init(day: String, weatherIcon: String, precipitation: Int?, lowTemp: Int, highTemp: Int) {
+    init(day: String, weatherIcon: WeatherIcon, precipitation: Int?, lowTemp: Int, highTemp: Int) {
         self.day = day
         self.weatherIcon = weatherIcon
-        self.precipitation = precipitation ?? 0
+        self.precipitation = precipitation
         self.lowTemp = lowTemp
         self.highTemp = highTemp
     }
 
     var body: some View {
         HStack {
-            Text("\(day)")
-                .font(.system(size: 22))
-                .fontWeight(.medium)
-                .foregroundStyle(.white)
-                .frame(width: 60)
-            Image(systemName: "\(weatherIcon)")
-                .resizable()
-                .frame(width: 28, height: 28)
-                .foregroundStyle(.yellow)
-                .padding(.leading, 4)
+            HStack() {
+                Text("\(day)")
+                    .font(.system(size: 22))
+                    .fontWeight(.medium)
+                    .foregroundStyle(.white)
+                Spacer()
+            }
+            VStack {
+                weatherIcon.icon
+                    .resizable()
+                    .frame(width: 26, height: 26)
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.top, 8)
+                if precipitation ?? 0 != 0 {
+                    Text("\(precipitation ?? 0)%")
+                        .font(.system(size: 15))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color(red: 0.51, green: 0.81, blue: 0.98))
+                        .offset(x:0.0, y:-2.0)
+                        .padding(.bottom, 4)
+                }
+            }
             Text("\(lowTemp)°")
                 .font(.system(size: 22))
                 .fontWeight(.medium)
@@ -77,16 +85,18 @@ struct DayOfWeatherView: View {
                 .foregroundStyle(.white)
                 .padding(.leading, 4)
 
-        }.frame(width: 325, height: 55)
-            .overlay(            
+        }
+        .frame(width: 305, height: 55)
+        .overlay(
                 Divider()
                 .background(.white)
+                .opacity(0.5)
                 .offset(x:0, y:-26)
             )
     }
 }
 
 #Preview {
-    DayOfWeatherView(day: "Mon", weatherIcon: "sun.max.fill", precipitation: 0, lowTemp: 12, highTemp: 22)
+    DayOfWeatherView(day: "Today", weatherIcon: .cloud, precipitation: 0, lowTemp: 12, highTemp: 22)
         .background(.gray)
 }
