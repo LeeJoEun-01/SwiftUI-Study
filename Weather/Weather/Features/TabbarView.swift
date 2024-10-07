@@ -75,7 +75,7 @@ struct CustomTabbarView: View {
                 }.padding(.trailing, 24)
 
             }.padding(.bottom, 5)
-        }.background(Color.clear)
+        }.background(Color(red: 0.16, green: 0.19, blue: 0.25))
             .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
