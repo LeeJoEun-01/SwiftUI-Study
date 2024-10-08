@@ -81,7 +81,7 @@ struct MainView: View {
                             .font(.system(size: 102))
                             .fontWeight(.thin)
                             .foregroundStyle(.white)
-                            .offset(x: 65, y: 0)
+                            .offset(x: 65, y: 0) // 지양하셈
                     )
                 Text(weather)
                     .font(.system(size: 24))
