@@ -20,17 +20,20 @@ struct GradientBar: View {
 
     var body: some View {
         ZStack{
+            Rectangle()
+                .frame(width: 100, height: 4)
+                .background(.black)
             RoundedRectangle(cornerSize: CGSize(width: 2, height: 2))
                 .frame(width: 100, height: 4)
-            RoundedRectangle(cornerSize: CGSize(width: 2, height: 2))
-                .frame(width: barWidth, height: 4)
-                .foregroundStyle(LinearGradient(colors: [.blue, .green,.yellow,.orange], startPoint: UnitPoint(x:-(barWidth/100), y:0.0), endPoint: UnitPoint(x:(barWidth/70), y:0.0)))
-                .background(.black)
-                .offset(x:lowTemp-10,y:0)
-        }
+                .foregroundStyle(LinearGradient(colors: [.blue, .green,.yellow,.orange], startPoint: .leading, endPoint: .trailing))
+                .mask(
+                    RoundedRectangle(cornerSize: CGSize(width: 2, height: 2))
+                        .frame(width: barWidth, height: 4)
+                )
+        }.clipShape(RoundedRectangle(cornerSize: CGSize(width: 4, height: 4)))
     }
 }
 
 #Preview {
-    GradientBar(lowTemp: 10, highTemp: 25)
+    GradientBar(lowTemp: 18, highTemp: 25)
 }

@@ -21,6 +21,8 @@ enum WeatherIcon: String {
         case .rain:
             return Image(systemName: "cloud.drizzle.fill")
                 .symbolRenderingMode(.multicolor)
+//              .symbolRenderingMode(.palette) // 팔레트 렌더링 모드 사용
+//             .foregroundStyle(.white, Color(red: 0.51, green: 0.81, blue: 0.98)
         case .cloud:
             return Image(systemName: "cloud.fill")
                 .symbolRenderingMode(.multicolor)
@@ -29,6 +31,8 @@ enum WeatherIcon: String {
                 .symbolRenderingMode(.multicolor)
         }
     }
+
+    // view builder
 }
 
 struct DayOfWeatherView: View {
@@ -58,8 +62,8 @@ struct DayOfWeatherView: View {
             VStack {
                 weatherIcon.icon
                     .resizable()
+                    .aspectRatio(contentMode: .fit) // frame 앞에서 해줘야됨
                     .frame(width: 26, height: 26)
-                    .aspectRatio(contentMode: .fit)
                     .padding(.top, 8)
                 if precipitation ?? 0 != 0 {
                     Text("\(precipitation ?? 0)%")
@@ -97,6 +101,6 @@ struct DayOfWeatherView: View {
 }
 
 #Preview {
-    DayOfWeatherView(day: "Today", weatherIcon: .cloud, precipitation: 0, lowTemp: 12, highTemp: 22)
-        .background(.gray)
+    DayOfWeatherView(day: "Today", weatherIcon: .rain, precipitation: 0, lowTemp: 12, highTemp: 22)
+        .background(.black)
 }
