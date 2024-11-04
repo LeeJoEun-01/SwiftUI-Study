@@ -7,17 +7,31 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct TabbarView: View {
     @State var selectedTab: Tab = .main
     var body: some View {
         ZStack{
             switch selectedTab {
             case .main:
-                MainView()
+                MainView(
+                    store: Store(initialState: MainFeature.State()) {
+                        MainFeature()
+                    }
+                )
             case .map:
-                MainView()
+                MainView(
+                    store: Store(initialState: MainFeature.State()) {
+                        MainFeature()
+                    }
+                )
             case .list:
-                MainView()
+                MainView(
+                    store: Store(initialState: MainFeature.State()) {
+                        MainFeature()
+                    }
+                )
             }
             CustomTabbarView(selectedTab: $selectedTab)
                 .position(CGPoint(x: UIScreen.main.bounds.width/2, y: 745.0))
@@ -76,7 +90,7 @@ struct CustomTabbarView: View {
 
             }.padding(.bottom, 5)
         }.background(Color(red: 0.16, green: 0.19, blue: 0.25))
-            .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            //.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 

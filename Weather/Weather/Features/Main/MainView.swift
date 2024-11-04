@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import Combine
+
+import ComposableArchitecture
+import StoreKit
 
 enum Tab {
     case main
@@ -34,7 +38,7 @@ struct MainView: View {
 
     @State private var location: String = "Seoul"
     @State private var temparature: Int = 21
-    @State private var weather: String = "Partly Cloudy"
+    @State private var weatherInfo: String = "Partly Cloudy"
     @State private var high: Int = 23
     @State private var low: Int = 17
     // State는 해당뷰에서만 사용하니까 꼭!꼭!꼭! private
@@ -57,6 +61,8 @@ struct MainView: View {
                                                      dayOfWeather(day: "Mon", weatherIcon: "cloud", precipitation: 0, lowTemp: 13, highTemp: 20),
                                                      dayOfWeather(day: "Tue", weatherIcon: "sun", precipitation: 0, lowTemp: 18, highTemp: 24),
                                                      dayOfWeather(day: "Sun", weatherIcon: "sun", precipitation: 0, lowTemp: 15, highTemp: 24)]
+
+    @Bindable var store: StoreOf<MainFeature>
 
     var body: some View {
         let rows = [GridItem(.flexible())]
@@ -83,7 +89,7 @@ struct MainView: View {
                             .foregroundStyle(.white)
                             .offset(x: 65, y: 0) // 지양하셈
                     )
-                Text(weather)
+                Text(weatherInfo)
                     .font(.system(size: 24))
                     .foregroundStyle(.white)
 
@@ -155,9 +161,25 @@ struct MainView: View {
                 }.padding(.top, 4)
             }
         }
+        .onAppear {
+            print("==== Appear ====")
+            store.send(.viewDidAppear)
+        }.onChange(of: store.currentWeather) { currentWeather in
+            if let weather = currentWeather {
+                temparature = Int(weather.temperature)
+                high = Int(weather.temperatureMax)
+                low = Int(weather.temperatureMin)
+                let weatherCode = WeatherCode(rawValue: weather.weatherCode)
+                weatherInfo = weatherCode?.toString() ?? "Invalid Code"
+            }
+        }
     }
 }
 
 #Preview {
-    MainView()
+    MainView(
+        store: Store(initialState: MainFeature.State()) {
+            MainFeature()
+        }
+    )
 }
