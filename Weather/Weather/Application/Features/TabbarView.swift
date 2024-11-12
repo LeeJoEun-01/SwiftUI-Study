@@ -16,25 +16,17 @@ struct TabbarView: View {
             switch selectedTab {
             case .main:
                 MainView(
-                    store: Store(initialState: MainFeature.State()) {
-                        MainFeature()
+                    store: Store(initialState: WeatherReducer.State()) {
+                        WeatherReducer()
                     }
                 )
             case .map:
-                MainView(
-                    store: Store(initialState: MainFeature.State()) {
-                        MainFeature()
-                    }
-                )
+                EmptyView()
             case .list:
-                MainView(
-                    store: Store(initialState: MainFeature.State()) {
-                        MainFeature()
-                    }
-                )
+                EmptyView()
             }
             CustomTabbarView(selectedTab: $selectedTab)
-                .position(CGPoint(x: UIScreen.main.bounds.width/2, y: 745.0))
+                .position(CGPoint(x: UIScreen.main.bounds.width/2, y: 760.0))
         }
     }
 }
@@ -88,9 +80,10 @@ struct CustomTabbarView: View {
                         .frame(width: 26, height: 25)
                 }.padding(.trailing, 24)
 
-            }.padding(.bottom, 5)
+            }//.padding(.bottom, 5)
+                .frame(height: 35)
         }.background(Color(red: 0.16, green: 0.19, blue: 0.25))
-            //.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            //.edgesIgnoringSafeArea(.top,.leading)
     }
 }
 

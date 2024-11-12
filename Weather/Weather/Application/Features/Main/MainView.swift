@@ -32,16 +32,10 @@ struct dayOfWeather: Hashable {
     let lowTemp: Int
     let highTemp: Int
 }
-
+// WithViewStore
 struct MainView: View {
+    @Bindable var store: StoreOf<WeatherReducer>
     @State var selectedTab: Tab = .main
-
-    @State private var location: String = "Seoul"
-    @State private var temparature: Int = 21
-    @State private var weatherInfo: String = "Partly Cloudy"
-    @State private var high: Int = 23
-    @State private var low: Int = 17
-    // State는 해당뷰에서만 사용하니까 꼭!꼭!꼭! private
 
     @State private var dummyData: [hourOfWeather] = [hourOfWeather(time: "Now", iconName: "sun.max.fill", temparature: 12),
                                                      hourOfWeather(time: "1PM", iconName: "cloud.drizzle.fill", temparature: 12),
@@ -62,8 +56,6 @@ struct MainView: View {
                                                      dayOfWeather(day: "Tue", weatherIcon: "sun", precipitation: 0, lowTemp: 18, highTemp: 24),
                                                      dayOfWeather(day: "Sun", weatherIcon: "sun", precipitation: 0, lowTemp: 15, highTemp: 24)]
 
-    @Bindable var store: StoreOf<MainFeature>
-
     var body: some View {
         let rows = [GridItem(.flexible())]
         let cols = [GridItem(.flexible())]
@@ -73,12 +65,12 @@ struct MainView: View {
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
             ScrollView(.vertical) {
-                Text(location)
+                Text(store.currentWeatherInfo?.location ?? "")
                     .font(.system(size: 37))
                     .foregroundStyle(.white)
                     .padding(.top, 34)
 
-                Text("\(temparature)")
+                Text("\(store.currentWeatherInfo?.temperature ?? 0)")
                     .font(.system(size: 102))
                     .fontWeight(.thin)
                     .foregroundStyle(.white)
@@ -89,16 +81,16 @@ struct MainView: View {
                             .foregroundStyle(.white)
                             .offset(x: 65, y: 0) // 지양하셈
                     )
-                Text(weatherInfo)
+                Text(store.currentWeatherInfo?.weatherInfo ?? "")
                     .font(.system(size: 24))
                     .foregroundStyle(.white)
 
                 HStack(spacing: 12, content: {
-                    Text("H:\(high)°")
+                    Text("H:\(store.currentWeatherInfo?.high ?? 0)°")
                         .font(.system(size: 21))
                         .fontWeight(.medium)
                         .foregroundStyle(.white)
-                    Text("L:\(low)°")
+                    Text("L:\(store.currentWeatherInfo?.low ?? 0)°")
                         .font(.system(size: 21))
                         .fontWeight(.medium)
                         .foregroundStyle(.white)
@@ -162,24 +154,16 @@ struct MainView: View {
             }
         }
         .onAppear {
-            print("==== Appear ====")
-            store.send(.viewDidAppear)
-        }.onChange(of: store.currentWeather) { currentWeather in
-            if let weather = currentWeather {
-                temparature = Int(weather.temperature)
-                high = Int(weather.temperatureMax)
-                low = Int(weather.temperatureMin)
-                let weatherCode = WeatherCode(rawValue: weather.weatherCode)
-                weatherInfo = weatherCode?.toString() ?? "Invalid Code"
-            }
+            print("=== onAppear ===")
+            store.send(.onAppear)
         }
     }
 }
 
 #Preview {
     MainView(
-        store: Store(initialState: MainFeature.State()) {
-            MainFeature()
+        store: Store(initialState: WeatherReducer.State()) {
+            WeatherReducer()
         }
     )
 }
