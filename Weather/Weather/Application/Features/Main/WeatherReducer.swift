@@ -49,7 +49,7 @@ struct WeatherReducer {
                        let weatherInfo = CurrentWeatherInfo(
                            location: "Seoul",
                            temperature: Int(interval.values.temperature),
-                           weatherInfo: "Clear",
+                           weatherInfo: WeatherCode(rawValue: interval.values.weatherCode)?.toString() ?? "",
                            high: Int(interval.values.temperatureMax),
                            low: Int(interval.values.temperatureMin)
                        )
