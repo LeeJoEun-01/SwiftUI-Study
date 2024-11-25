@@ -42,45 +42,122 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct WeatherWidgetEntryView : View {
+    @Environment(\.widgetFamily) var family: WidgetFamily
+
     var entry: Provider.Entry
 
     var body: some View {
+        sizeBody()
+    }
 
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                Text("서울")
-                    .font(.system(size: 15))
+    @ViewBuilder
+    func sizeBody() -> some View {
+        switch family {
+        case .systemSmall:
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    Text("서울")
+                        .font(.system(size: 15))
+                        .fontWeight(.medium)
+                        .foregroundStyle(.white)
+                    Image(systemName: "location.fill")
+                        .resizable()
+                        .frame(width: 9, height: 9)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.white)
+                    Spacer()
+                }
+                Text("25°")
+                    .font(.system(size: 45))
+                    .fontWeight(.light)
+                    .foregroundStyle(.white)
+
+                Image(systemName: "sun.max.fill")
+                    .resizable()
+                    .frame(width: 19, height: 19)
+                    .symbolRenderingMode(.multicolor)
+                    .padding(.top, 8)
+                Text("Sunny")
+                    .font(.system(size: 13))
                     .fontWeight(.medium)
                     .foregroundStyle(.white)
-                Image(systemName: "location.fill")
-                    .resizable()
-                    .frame(width: 9, height: 9)
-                    .symbolRenderingMode(.palette)
+                    .padding(.top, 3)
+                Text("H:31°, L:25°")
+                    .font(.system(size: 13))
+                    .fontWeight(.medium)
                     .foregroundStyle(.white)
-                Spacer()
+                    .padding(.top, 2)
             }
-            Text("25°")
-                .font(.system(size: 45))
-                .fontWeight(.light)
-                .foregroundStyle(.white)
+            .edgesIgnoringSafeArea(.all)
 
-            Image(systemName: "sun.max.fill")
-                .resizable()
-                .frame(width: 19, height: 19)
-                .symbolRenderingMode(.multicolor)
-                .padding(.top, 8)
-            Text("Sunny")
-                .font(.system(size: 13))
-                .fontWeight(.medium)
-                .foregroundStyle(.white)
-                .padding(.top, 3)
-            Text("H:31°, L:25°")
-                .font(.system(size: 13))
-                .fontWeight(.medium)
-                .foregroundStyle(.white)
-                .padding(.top, 2)
+        case .systemMedium:
+            VStack {
+                HStack {
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            Text("서울")
+                                .font(.system(size: 15))
+                                .fontWeight(.medium)
+                                .foregroundStyle(.white)
+                            Image(systemName: "location.fill")
+                                .resizable()
+                                .frame(width: 9, height: 9)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.white)
+                        }
+                        Text("25°")
+                            .font(.system(size: 45))
+                            .fontWeight(.light)
+                            .foregroundStyle(.white)
+                            .padding(.all, 0)
+                    }
+                    Spacer()
+                    VStack(alignment: .trailing, spacing: 0) {
+                        Image(systemName: "sun.max.fill")
+                            .resizable()
+                            .frame(width: 19, height: 19)
+                            .symbolRenderingMode(.multicolor)
+                            .padding(.top, 8)
+                        Text("Sunny")
+                            .font(.system(size: 13))
+                            .fontWeight(.medium)
+                            .foregroundStyle(.white)
+                            .padding(.top, 3)
+                        Text("H:31°, L:25°")
+                            .font(.system(size: 13))
+                            .fontWeight(.medium)
+                            .foregroundStyle(.white)
+                            .padding(.top, 2)
+                    }
+                }.padding(.bottom, 8)
+                HStack(alignment: .center, spacing: 28) {
+                    ForEach(0..<6) { _ in
+                        VStack(alignment: .center, spacing: 4) {
+                            Text("10AM")
+                                .font(.system(size: 10))
+                                .fontWeight(.medium)
+                                .opacity(0.72)
+                            Image(systemName: "cloud.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height: 20)
+                                .symbolRenderingMode(.multicolor)
+                            Text("25°")
+                                .font(.system(size: 11))
+                                .fontWeight(.semibold)
+                        }.foregroundStyle(.white)
+                    }
+                }
+            }.edgesIgnoringSafeArea(.all)
+
+        case .systemLarge:
+            EmptyView()
+
+        case .systemExtraLarge:
+            EmptyView()
+        default:
+            EmptyView()
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
@@ -109,7 +186,7 @@ extension ConfigurationAppIntent {
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview(as: .systemMedium) {
     WeatherWidget()
 } timeline: {
     SimpleEntry(date: .now, configuration: .smiley)
